@@ -1,0 +1,35 @@
+version: '2'
+services:
+
+  gui-app_root:
+    build:
+      context: .
+      dockerfile: Dockerfile.root
+    image: gui-app_root
+    network_mode: host
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+    container_name: gui-app_root
+
+# docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" gui-app
+# https://medium.com/@SaravSun/running-gui-applications-inside-docker-containers-83d65c0db110
+
+  gui-app_user:
+    build:
+      context: .
+      dockerfile: Dockerfile.user
+      args:
+        uid: 1001
+        user: $USER
+    image: gui-app_user
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    tty: true
+    container_name: gui-app_user
+
+
+

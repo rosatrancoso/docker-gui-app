@@ -1,0 +1,12 @@
+FROM centos:centos7
+RUN yum install -y sudo xeyes
+
+ARG uid
+ARG user
+
+RUN echo "Adding user $user with uid $uid" &&\
+    adduser -u $uid $user &&\
+    echo "$user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$user && \
+    chmod 0440 /etc/sudoers.d/$user
+
+USER $user

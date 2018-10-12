@@ -1,0 +1,12 @@
+gui-app:
+  build: .
+  net: host
+  environment:
+    - DISPLAY=$DISPLAY
+  volumes:
+    - $HOME/.Xauthority:/root/.Xauthority:rw
+
+# docker run --net=host --env="DISPLAY" --volume="$HOME/.Xauthority:/root/.Xauthority:rw" gui-app
+# https://medium.com/@SaravSun/running-gui-applications-inside-docker-containers-83d65c0db110
+
+
